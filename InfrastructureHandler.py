@@ -4,6 +4,8 @@ import subprocess
 
 class InfrastructureHandler:
     def init(self):
+        password = '1111'
+
         vb_instalation_checking = subprocess.Popen(
             ["dpkg", "--get-selections", "virtualbox"],
             stdout=subprocess.PIPE,
@@ -17,7 +19,7 @@ class InfrastructureHandler:
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE)
-            print(instalation_proc.communicate('7753191\n'))
+            print(instalation_proc.communicate(password+'\n'))
             out, er = instalation_proc.communicate()
             print(out)
         else:
