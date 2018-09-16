@@ -35,8 +35,12 @@ class InfrastructureHandler:
         subprocess.call(['vboxmanage', 'modifyvm', 'UbuntuTest', '--vrdeaddress', '127.0.0.1'])
         subprocess.call(['vboxmanage', 'modifyvm', 'UbuntuTest', '--vrdeport', '5901'])
         subprocess.call(['vboxmanage', 'modifyvm', 'UbuntuTest', '--vrdeproperty', 'VNCPassword=12345678'])
-        subprocess.call(['vboxmanage', 'startvm', 'UbuntuTest'])
 
-        return 'http://127.0.0.1:8000'
+        return {'name': 'UbuntuTest', 'ip': '127.0.0.1', 'port': '5901'}
 
+    def run_vm(self, name):
+        proc = subprocess.Popen(['vboxmanage', 'startvm', name], stdout=subprocess.PIPE)
+        print(proc.stdout.read())
 
+    def run_vnc_client(self, ip, port):
+        subprocess.call(['/home/chevil/Project/noVNC-1.0.0/utils/launch.sh', '--vnc', ip+':'+str(port)])
